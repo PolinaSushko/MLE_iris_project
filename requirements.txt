@@ -5,4 +5,4 @@ plotly
 scikit-learn
 tensorflow
 warnings
--e .
+#-e .
