@@ -12,13 +12,35 @@ from src.utils import save_object
 
 @dataclass
 class DataTransformationConfig:
+    """
+    Holds paths and settings related to data transformation components,
+    such as the location for saving the preprocessor object file.
+    
+    Attributes:
+        preprocessor_obj_file_path (str): Path where the preprocessor object will be saved after transformation setup.
+    """
     preprocessor_obj_file_path = os.path.join("artifacts", "preprocessor.pkl")
 
 class DataTransformation:
+    """
+    Provides methods to preprocess data, including scaling of numerical columns 
+    and saving the preprocessor object for later use. The class also initiates the transformation 
+    on training and test data by applying the configured preprocessing steps.
+
+    Attributes:
+        data_transformation_config (DataTransformationConfig): Configuration object specifying  file paths and other settings for data transformation.
+    """
     def __init__(self):
         self.data_transformation_config = DataTransformationConfig()
 
     def get_data_transformer_obg(self):
+        """
+        Creates and configures a preprocessor object for data transformation.
+        The method constructs a ColumnTransformer that standardizes specified numerical columns using StandardScaler.
+
+        Returns:
+            ColumnTransformer: Configured preprocessor for data transformation.
+        """
         try:
             num_cols = ['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']
 
@@ -35,6 +57,18 @@ class DataTransformation:
             raise e
         
     def initiate_data_transformation(self, train_path, test_path):
+        """
+        Initiates data transformation on training and testing datasets.
+        This method reads the datasets, applies the preprocessor object to scale numerical columns, 
+        and saves the preprocessor for future use. It then returns the transformed training and testing data arrays.
+
+        Args:
+            train_path (str): Path to the training dataset file.
+            test_path (str): Path to the testing dataset file.
+
+        Returns:
+            tuple: Transformed training and testing data arrays along with the path to the saved preprocessor object.
+        """
         try:
             train_df = pd.read_csv(train_path)
             test_df  = pd.read_csv(test_path)
