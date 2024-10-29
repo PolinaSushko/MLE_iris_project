@@ -8,6 +8,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from src.exception import CustomException
 from src.logger import logging
+from src.utils import save_object
 
 @dataclass
 class DataTransformationConfig:
@@ -56,15 +57,20 @@ class DataTransformation:
             X_train_scaled = preprocessing_obj.fit_transform(X_train)
             X_test_scaled  = preprocessing_obj.transform(X_test)
 
-            train_arr_scaled = np._c[X_train_scaled, np.array(y_train)]
-            test_arr_scaled  = np._c[X_test_scaled, np.array(y_test)]
+            train_arr_scaled = np.c_[X_train_scaled, np.array(y_train)]
+            test_arr_scaled  = np.c_[X_test_scaled, np.array(y_test)]
 
             logging.info("Saved preprocessing object")
+
+            save_object(
+                file_path = self.data_transformation_config.preprocessor_obj_file_path,
+                obj = preprocessing_obj
+            )
 
             return (
                 train_arr_scaled, test_arr_scaled,
                 self.data_transformation_config.preprocessor_obj_file_path
             )
 
-        except:
-            pass
+        except Exception as e:
+            raise CustomException(e, sys)
