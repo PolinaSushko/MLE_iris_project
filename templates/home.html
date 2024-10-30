@@ -1,0 +1,34 @@
+<html>
+<body>
+    <div class="predict">
+       <h1>Iris Species Predictor</h1>
+   
+       <form action="{{ url_for('predict_data')}}" method="post">
+        <h2>
+            <legend>Predict the Species of an Iris Flower</legend>
+        </h2>
+        <div class="mb-3">
+            <label class="form-label">Sepal Length (cm)</label>
+            <input class="form-control" type="number" name="sepal_length" placeholder="Enter Sepal Length in cm" step="0.1" min="0" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Sepal Width (cm)</label>
+            <input class="form-control" type="number" name="sepal_width" placeholder="Enter Sepal Width in cm" step="0.1" min="0" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Petal Length (cm)</label>
+            <input class="form-control" type="number" name="petal_length" placeholder="Enter Petal Length in cm" step="0.1" min="0" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Petal Width (cm)</label>
+            <input class="form-control" type="number" name="petal_width" placeholder="Enter Petal Width in cm" step="0.1" min="0" required />
+        </div>
+        <div class="mb-3">
+            <input class="btn btn-primary" type="submit" value="Predict Iris Species" />
+        </div>
+    </form>
+    <h2>
+       The predicted species is: {{ results }}
+    </h2>
+   </body>
+</html>

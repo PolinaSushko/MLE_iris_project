@@ -2,7 +2,7 @@ import os
 import sys
 import numpy as np
 import pandas as pd
-import dill
+import pickle 
 from sklearn.metrics import accuracy_score
 from src.exception import CustomException
 
@@ -13,7 +13,7 @@ def save_object(file_path, obj):
         os.makedirs(dir_path, exist_ok = True)
 
         with open(file_path, 'wb') as f:
-            dill.dump(obj, f)
+            pickle.dump(obj, f)
 
     except Exception as e:
         raise CustomException(e, sys)
@@ -27,3 +27,11 @@ def evaluate_model(X_train, y_train, X_test, y_test, model):
     accuracy = accuracy_score(y_test, y_pred_max)
 
     return accuracy
+
+def load_object(file_path):
+    try:
+        with open(file_path, "rb") as f:
+             return pickle.load(f)
+
+    except Exception as e:
+            raise CustomException(e, sys)
