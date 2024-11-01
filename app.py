@@ -14,6 +14,7 @@ def index():
 def predict_data():
     if request.method == 'GET':
         return render_template('home.html')
+    
     else:
         data = CustomData(
             sepal_length = float(request.form.get('sepal_length')),
