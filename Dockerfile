@@ -10,8 +10,11 @@ WORKDIR /app
 # Install the Python packages listed in the requirements.txt file
 RUN pip install -r requirements.txt
 
-# Expose the port defined by the PORT environment variable to allow external access
-EXPOSE $PORT
+# Set the Flask environment and specify the application entry point
+ENV FLASK_APP=app.py
+
+# Expose port 5000 (default Flask port), which can be overridden with the $PORT environment variable
+EXPOSE 5000
 
 # Command to run the Flask application, making it accessible on all IP addresses and using the specified port
-CMD ["flask", "run", "--host=0.0.0.0", "--port=$PORT"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=${PORT:-5000}"]
