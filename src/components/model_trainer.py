@@ -9,13 +9,43 @@ from src.utils import save_object, evaluate_model
 
 @dataclass
 class ModelTrainerConfig:
+    """
+    Configuration class for setting paths and parameters used during the model training process.
+
+    Attributes:
+        trainde_model_file_path (str): The file path where the trained model will be saved.
+    """
     trainde_model_file_path = os.path.join("artifacts", "model.pkl")
 
 class ModelTrainer:
+    """
+    Prepares the model architecture, compiles it, trains it on the provided training data, evaluates its performance, and saves the trained model.
+
+    Attributes:
+        model_trainer_config (ModelTrainerConfig): Configuration instance that holds file paths and settings 
+                                                   for model saving.
+    """
     def __init__(self):
         self.model_trainer_config = ModelTrainerConfig()
 
     def initiate_model_trainer(self, train_arr, test_arr):
+        """
+        Initiates model training by constructing, compiling, training, and evaluating a neural network model.
+        The model is saved upon successful training and evaluation.
+
+        The architecture includes:
+            - Dense layers with ReLU activation for learning feature representations.
+            - Batch normalization and dropout layers to reduce overfitting.
+            - Regularization to prevent model overfitting.
+            - A softmax output layer for multi-class classification.
+
+        Args:
+            train_arr (np.ndarray): Numpy array containing training data and labels.
+            test_arr (np.ndarray): Numpy array containing testing data and labels.
+
+        Returns:
+            model_accuracy (float): The accuracy score of the model on the test dataset.
+        """
         try:
             logging.info("Split train and input data")
 
